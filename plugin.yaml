@@ -1,0 +1,13 @@
+schema: mcpg.dev/plugin/v1
+id: dev.mcpg.circuit-breaker
+name: Circuit Breaker
+license: Apache-2.0
+description: |
+  Per-tool circuit breaker that tracks failures and short-circuits
+  requests to unhealthy backends with fast 503 responses. State
+  machine: Closed → Open (after failure_threshold) → HalfOpen (after
+  cooldown) → Closed (on probe success) or back to Open (on failure).
+class: tool_gate
+runtime: native-cdylib-v1
+protocol_version: "1.0"
+required_capabilities: []

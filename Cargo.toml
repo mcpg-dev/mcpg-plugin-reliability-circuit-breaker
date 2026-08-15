@@ -1,0 +1,31 @@
+[package]
+name = "mcpg-plugin-reliability-circuit-breaker"
+version = "0.1.0-alpha.15"
+license = "Apache-2.0"
+edition = "2024"
+description = "Circuit breaker ToolGate plugin for MCPG gateway — per-tool failure tracking with open/half-open/closed states"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+mcpg-plugin-protocol = { git = "https://github.com/mcpg-dev/mcpg-plugin-protocol", tag = "v0.1.0-beta.13", version = "=0.1.0-beta.13" }
+mcpg-plugin-sdk = { git = "https://github.com/mcpg-dev/mcpg-plugin-sdk", tag = "v0.1.0-beta.13", version = "=0.1.0-beta.13" }
+dashmap = "6"
+metrics = "0.24"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tracing = "0.1"
+
+[features]
+# Default ON so standalone `cargo build -p <this>` still produces a
+# working cdylib. Disabled by the gateway's path-dep so multiple
+# plugins linked together don't all export `mcpg_plugin_register`
+# (linker collision).
+default = ["cdylib-export"]
+cdylib-export = []
+# Declared so the SDK's per-kind `build_static` accessor
+# (gated `#[cfg(feature = "static-firstparty")]`) does not trigger
+# `unexpected_cfgs` in consumer compilation. Empty: this plugin is
+# consumed as a cdylib, not via the static-firstparty fast path.
+static-firstparty = []
