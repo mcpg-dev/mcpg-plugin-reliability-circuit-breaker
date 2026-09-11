@@ -38,7 +38,7 @@ plugins:
     source: { path: ./plugins/libmcpg_plugin_reliability_circuit_breaker.so }
     # or, platform-agnostic — the gateway resolves the artifact for its own
     # os/arch/libc at boot:
-    # source: { oci: ghcr.io/mcpg-dev/source-code/plugins/circuit-breaker:protocol-1 }
+    # source: { oci: ghcr.io/mcpg-dev/plugins/circuit-breaker }
     config:
       failure_threshold: 5            # consecutive failures that trip the circuit
       cooldown_ms: 30000              # open → half-open delay
